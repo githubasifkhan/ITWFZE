@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record id="view_order_form_inherited" model="ir.ui.view">
+            <field name="name">sale.order.inherited</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="model">sale.order</field>
+            <field name="priority">100</field>
+            <field type="xml" name="arch">
+<!--                <xpath expr="//field[@name='partner_id']" position="after">-->
+                <xpath expr="//field[@name='note']" position="before">
+                    <field name="freight"/>
+                    <field name="duty"/>
+                    <field name="doc_charges"/>
+                </xpath>
+                <xpath expr="//notebook/page[@name='customer_signature']" position="after">
+                    <page string="Term &amp; Conditions">
+                        <group>
+                            <field name="tab_payment"/>
+                            <field name="tab_delivery"/>
+                            <field name="tab_incoterms"/>
+                            <field name="tab_standards"/>
+                            <field name="tab_others"/>
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='amount_untaxed']" position="after">
+                    <field name="freight" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" force_save="1"/>
+                    <field name="duty" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" force_save="1"/>
+                    <field name="doc_charges" readonly="1" widget="monetary" options="{'currency_field': 'currency_id'}" force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
