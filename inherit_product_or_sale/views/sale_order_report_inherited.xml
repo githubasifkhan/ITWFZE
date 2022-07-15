@@ -197,7 +197,9 @@
                                             </t>
                                             <t t-else="">
                                                 <td name="td_amount_by_group_label">
-                                                    <span t-esc="amount_by_group[0]"/>
+                                                    <!--                                                    <span t-esc="amount_by_group[0]"/>-->
+                                                    <strong>Taxes</strong>
+
                                                 </td>
                                                 <td name="td_amount_by_group" class="text-right o_price_total">
                                                     <span t-esc="amount_by_group[1]"
@@ -232,7 +234,62 @@
                     </div>
 
                     <div class="oe_structure"/>
+                    <table class="table table-sm no-spacing table-borderless">
+                        <t t-if="doc.tab_payment">
+                            <tr>
+                                <td width="10%">
+                                    <strong>Payment</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.tab_payment"/>
+                                </td>
+                            </tr>
+                        </t>
 
+                        <t t-if="doc.tab_delivery">
+                            <tr>
+                                <td width="10%">
+                                    <strong>Delivery</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.tab_delivery"/>
+                                </td>
+                            </tr>
+                        </t>
+
+                        <t t-if="doc.tab_incoterms">
+                            <tr>
+                                <td width="10%">
+                                    <strong>Incoterms</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.tab_incoterms"/>
+                                </td>
+                            </tr>
+                        </t>
+
+                        <t t-if="doc.tab_standards">
+                            <tr>
+                                <td width="10%">
+                                    <strong>Standards</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.tab_standards"/>
+                                </td>
+                            </tr>
+                        </t>
+
+                        <t t-if="doc.tab_others">
+                            <tr>
+                                <td width="10%">
+                                    <strong>Others</strong>
+                                </td>
+                                <td>
+                                    <span t-field="doc.tab_others"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
                     <p t-field="doc.note"/>
                     <p t-if="doc.payment_term_id.note">
                         <span t-field="doc.payment_term_id.note"/>

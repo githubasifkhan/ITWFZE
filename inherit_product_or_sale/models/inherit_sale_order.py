@@ -7,6 +7,7 @@ class SaleOrderInherited(models.Model):
     freight = fields.Integer('Freight')
     duty = fields.Integer('Duty')
     doc_charges = fields.Integer('Doc. Charges')
+    vat = fields.Integer('VAT')
 
     tab_payment = fields.Char('Payment')
     tab_delivery = fields.Char('Delivery')
@@ -14,7 +15,7 @@ class SaleOrderInherited(models.Model):
     tab_standards = fields.Char('Standards')
     tab_others = fields.Char('Others')
 
-    @api.depends('order_line.price_total', 'freight', 'duty', 'doc_charges')
+    @api.depends('order_line.price_total', 'freight', 'duty', 'doc_charges', 'vat')
     def _amount_all(self):
         """
         Compute the total amounts of the SO.
@@ -27,5 +28,5 @@ class SaleOrderInherited(models.Model):
             order.update({
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
-                'amount_total': amount_untaxed + amount_tax + order.freight + order.duty + order.doc_charges,
+                'amount_total': amount_untaxed + amount_tax + order.freight + order.duty + order.doc_charges
             })
