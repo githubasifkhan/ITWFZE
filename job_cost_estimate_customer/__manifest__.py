@@ -6,10 +6,11 @@
     'name': "Estimation for Jobs - Material / Labour / Overheads",
     'version': '1.8',
     'price': 79.0,
-    'depends': [
+    'depends': ['base',
                 'sale',
                 'project',
                 'hr_timesheet',
+                'product'
                 ],
     'currency': 'EUR',
     'license': 'Other proprietary',

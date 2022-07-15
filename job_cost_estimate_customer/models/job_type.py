@@ -2,6 +2,7 @@
 
 from odoo import models, fields
 
+
 class EstimateJobType(models.Model):
     _name = 'estimate.job.type'
 
@@ -15,11 +16,9 @@ class EstimateJobType(models.Model):
     )
     job_type = fields.Selection(
         selection=[
-            ('material','Material'),
-            ('labour','Labour'),
-            ('overhead','Overhead')],
-        string='Type',
+            ('material', 'Material')],
+        string='Type', default='material',
         required=True,
     )
-    
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
