@@ -15,6 +15,13 @@ class SaleOrderInherited(models.Model):
     tab_standards = fields.Char('Standards')
     tab_others = fields.Char('Others')
 
+    # Some extra fields for report
+    fao = fields.Char('F.A.O')
+    project = fields.Char('Project')
+    rfq_ref = fields.Char('RFQ Ref')
+    date_of_rfq = fields.Date('Date of RFQ')
+    est_mass = fields.Integer('Est.Mass')
+
     @api.depends('order_line.price_total', 'freight', 'duty', 'doc_charges', 'vat')
     def _amount_all(self):
         """
@@ -28,5 +35,9 @@ class SaleOrderInherited(models.Model):
             order.update({
                 'amount_untaxed': amount_untaxed,
                 'amount_tax': amount_tax,
-                'amount_total': amount_untaxed + amount_tax + order.freight + order.duty + order.doc_charges
+                'amount_total': amount_untaxed + amount_tax + order.freight + order.duty + order.doc_charges + order.vat
             })
+    def get_amount_in_words(self):
+        for rec in self:
+            text = self.currency_id.amount_to_text(rec.amount_total)
+            return text.title()
