@@ -530,6 +530,7 @@ class HrPayslipLine(models.Model):
     slip_id = fields.Many2one('hr.payslip', string='Pay Slip', required=True, ondelete='cascade', help="Payslip")
     salary_rule_id = fields.Many2one('hr.salary.rule', string='Rule', required=True, help="salary rule")
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True, help="Employee")
+    # category_id = fields.Many2one(related='salary_rule_id.category_id', string='Category', required=True)
     contract_id = fields.Many2one('hr.contract', string='Contract', required=True, index=True, help="Contract")
     rate = fields.Float(string='Rate (%)', digits=dp.get_precision('Payroll Rate'), default=100.0)
     amount = fields.Float(digits=dp.get_precision('Payroll'))
@@ -643,18 +644,18 @@ class ResourceMixin(models.AbstractModel):
         # in order to compute the total hours on the first and last days
         from_full = from_datetime - timedelta(days=1)
         to_full = to_datetime + timedelta(days=1)
-        intervals = calendar._attendance_intervals(from_full, to_full, resource)
+        intervals = calendar._attendance_intervals_batch(from_full, to_full, resource)
         day_total = defaultdict(float)
-        for start, stop, meta in intervals:
+        for start, stop, meta in intervals[resource.id]:
             day_total[start.date()] += (stop - start).total_seconds() / 3600
 
         # actual hours per day
         if compute_leaves:
-            intervals = calendar._work_intervals(from_datetime, to_datetime, resource, domain)
+            intervals = calendar._work_intervals_batch(from_datetime, to_datetime, resource, domain)
         else:
-            intervals = calendar._attendance_intervals(from_datetime, to_datetime, resource)
+            intervals = calendar._attendance_intervals_batch(from_datetime, to_datetime, resource)
         day_hours = defaultdict(float)
-        for start, stop, meta in intervals:
+        for start, stop, meta in intervals[resource.id]:
             day_hours[start.date()] += (stop - start).total_seconds() / 3600
 
         # compute number of days as quarters

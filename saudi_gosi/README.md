@@ -7,7 +7,7 @@ also allows to print the pdf reports of those Contribution registers.
 
 Installation
 ============
-- www.odoo.com/documentation/14.0/setup/install.html
+- www.odoo.com/documentation/15.0/setup/install.html
 - Install our custom addon
 
 License
@@ -28,6 +28,7 @@ Author
 
 Developer: Sayooj A O @ Cybrosys
            V14 Ijaz @ Cybrosys
+           V15 Jibin @ Cybrosys
 
 Maintainer
 ----------
